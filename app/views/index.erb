@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
   <h1>Welcome to Sinatra!</h1>
   <p>Hello, world!</p>
 
@@ -20,4 +20,37 @@
       <td><code><%= File.expand_path('../../controllers/index.rb', __FILE__).gsub(Sinatra::Application.root, '') %></code></td>
     </tr>
   </table>
-</div>
+</div> -->
+
+<h3>My Google Maps Demo</h3>
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var boulders = [
+           ['ratRock' lat: 40.7693154, lng: -73.977657],
+           ['worthlessBoulder' lat: 40.798204, lng: -73.954521]
+        ]
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: ratRock
+        });
+        var marker, i;
+
+        for (i=0; i < boulders.length, i++){
+          marker = new google.maps.Marker({
+            postion: new google.maps.LatLing(boulders[i][1], boulders[i][2]),
+            map: map
+          });
+        }
+        // var marker = new google.maps.Marker({
+        //   position: ratRock,
+        //   map: map
+        // });
+        // var marker2 = new google.maps.Marker({
+        //   position = worthlessBoulder
+        // });
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEtlZJVVzdR3-mpxvWIfgN5pkL86uyIDs&callback=initMap">
+    </script>

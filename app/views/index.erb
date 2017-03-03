@@ -1,23 +1,56 @@
-<div class="container">
-  <h1>Welcome to Sinatra!</h1>
-  <p>Hello, world!</p>
+<h3>Boulders in Central Park</h3>
+    <div id="map"></div>
+<script>
 
-  <table>
-    <tr>
-      <th>File Description</th>
-      <th>File Location</th>
-    </tr>
-    <tr>
-      <td>This view file</td>
-      <td><code><%= __FILE__.gsub(Sinatra::Application.root, '') %></code></td>
-    </tr>
-    <tr>
-      <td>The layout file</td>
-      <td><code><%= File.expand_path('../layout.erb', __FILE__).gsub(Sinatra::Application.root, '') %></code></td>
-    </tr>
-    <tr>
-      <td>The current controller</td>
-      <td><code><%= File.expand_path('../../controllers/index.rb', __FILE__).gsub(Sinatra::Application.root, '') %></code></td>
-    </tr>
-  </table>
-</div>
+      function initMap() {
+
+        var ratRock = {
+          info: "Rat Rock",
+          lat: 40.7693154,
+          lng: -73.977657
+        };
+
+        var worthlessBoulder = {
+          info: "Worthless Boulder",
+          lat: 40.798204,
+          lng: -73.954521
+        };
+
+        var boulders = [
+           [ratRock.info, ratRock.lat, ratRock.lng, 0],
+           [worthlessBoulder.info, worthlessBoulder.lat, ratRock.lng, 1]
+        ];
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: ratRock,
+          mapTypeId: google.maps.MapTypeId.TERRAIN
+        });
+
+        var infowindow = new google.maps.InfoWindow({});
+
+        var marker, i;
+
+        for (i=0; i < boulders.length; i++) {
+          marker = new google.maps.Marker({
+            postion: new google.maps.LatLng(boulders[i][1], boulders[i][2]),
+            map: map
+          });
+
+          google.maps.event.addListener(marker, 'click', (function (marker, i){
+            return function(){
+              infowindow.setContent(locations[i][0]);
+              infowwindow.open(map,marker);
+            }
+          })(marker,i));
+        }
+      }
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEtlZJVVzdR3-mpxvWIfgN5pkL86uyIDs&callback=initMap">
+    </script>
+
+    <!-- look into using fucntion displayMarkers(){}
+      as well as create\Marker()
+    -->
